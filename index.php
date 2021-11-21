@@ -61,7 +61,24 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.11.3/datatables.min.js"></script>
 
     <script type="text/javascript">
-        $('#datatable').DataTable({});
+        $('#datatable').DataTable({
+            'serverSide': true,
+            'processing': true,
+            'paging': true,
+            'order': [],
+            'ajax': {
+                'url': 'fetchData.php',
+                'type': 'post'
+            },
+            'fnCreateRow': function(nRow, aData, iDataIndex) {
+                $(nRow).attr('id', aData[0]);
+            },
+            'columnDefs': [{
+                'target': [0, 5],
+                'orderable': false
+            }]
+
+        });
     </script>
 
     <!-- Optional JavaScript; choose one of the two! -->
