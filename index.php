@@ -81,9 +81,42 @@
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
+    <!-- javascript tambah user -->
+    <script type="text/javascript">
+        $(document).on('submit', '#formtuser', function(event) {
+            event.preventDefault();
+            var username = $('#username').val();
+            var email = $('#email').val();
+            var mobile = $('#mobile').val();
+            var city = $('#city').val();
+
+            if (username != '' && email != '' && mobile != '' && city != '') {
+                $.ajax({
+                    url: 'add_user.php',
+                    data: {
+                        username: username,
+                        email: email,
+                        mobile: mobile,
+                        city: city
+                    },
+                    type: 'post',
+                    success: function(data) {
+                        var json = JSON.parse(data);
+                        status = json.status;
+                        if (status == "success") {
+                            table = $('#datatable').DataTable();
+                            table.draw();
+                            alert('Berhasil Tambah User');
+                        }
+                    }
+                });
+            } else {
+                alert("input tidak boleh kosong");
+            }
+        });
+    </script>
 
     <!-- Modal Tambah User -->
-
     <!-- Modal -->
     <div class="modal fade" id="tambahUserModal" tabindex="-1" aria-labelledby="tambahUserModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -92,39 +125,39 @@
                     <h5 class="modal-title" id="tambahUserModalLabel">Tambah User</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="javascript:void();" method="post" id="formTambahUser">
+                <form action="javascript:void();" method="post" id="formtuser">
                     <div class="modal-body">
                         <div class="mb-3 row">
-                            <label for="inputUsername" class="col-sm-2 col-form-label">Username</label>
+                            <label for="username" class="col-sm-2 col-form-label">Username</label>
                             <div class="col-sm-10">
-                                <input type="text" name="username" class="form-control" id="inputUsername" value="">
+                                <input type="text" name="username" class="form-control" id="username" value="">
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                            <label for="email" class="col-sm-2 col-form-label">Email</label>
                             <div class="col-sm-10">
-                                <input type="text" name="email" class="form-control" id="inputEmail" value="">
+                                <input type="text" name="email" class="form-control" id="email" value="">
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="inputMobile" class="col-sm-2 col-form-label">mobile</label>
+                            <label for="mobile" class="col-sm-2 col-form-label">mobile</label>
                             <div class="col-sm-10">
-                                <input type="text" name="mobile" class="form-control" id="inputMobile" value="">
+                                <input type="text" name="mobile" class="form-control" id="mobile" value="">
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="inputCity" class="col-sm-2 col-form-label">City</label>
+                            <label for="city" class="col-sm-2 col-form-label">City</label>
                             <div class="col-sm-10">
-                                <input type="text" name="city" class="form-control" id="inputCity" value="">
+                                <input type="text" name="city" class="form-control" id="city" value="">
                             </div>
                         </div>
                     </div>
-                </form>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Tambah</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Tambah</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

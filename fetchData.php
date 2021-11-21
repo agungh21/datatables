@@ -48,12 +48,13 @@ if ($_POST['length'] != -1) {
 }
 
 $data = array();
+$i = 1;
 
 $run_query = mysqli_query($con, $sql);
 $filtered_rows = mysqli_num_rows($run_query);
 while ($row = mysqli_fetch_assoc($run_query)) {
     $subarray = array();
-    $subarray[] = $row['id'];
+    $subarray[] = $i++;
     $subarray[] = $row['username'];
     $subarray[] = $row['email'];
     $subarray[] = $row['mobile'];
