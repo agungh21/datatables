@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
-                        <table class="table">
+                        <table id="datatable" class="table">
                             <thead>
                                 <th>No</th>
                                 <th>Username</th>
@@ -59,6 +59,10 @@
     <!-- data tables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.11.3/datatables.min.css" />
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.11.3/datatables.min.js"></script>
+
+    <script type="text/javascript">
+        $('#datatable').DataTable({});
+    </script>
 
     <!-- Optional JavaScript; choose one of the two! -->
 
