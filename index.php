@@ -175,6 +175,31 @@
                 }
             });
         });
+
+        $(document).on('click', '.deleteBtn', function(e) {
+            var table = $('#datatable').DataTable();
+            e.preventDefault();
+            var id = $(this).data('id');
+            if (confirm("Yakin Hapus data ini?")) {
+                $.ajax({
+                    url: "delete_user.php",
+                    data: {
+                        id: id
+                    },
+                    type: "post",
+                    success: function(data) {
+                        var json = JSON.parse(data);
+                        status = json.status;
+                        if (status == 'success') {
+                            $("#" + id).closest('tr').remove();
+                        } else {
+                            alert('failed');
+                            return;
+                        }
+                    }
+                });
+            }
+        });
     </script>
 
     <!-- Modal Tambah User -->
