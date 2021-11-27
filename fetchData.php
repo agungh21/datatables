@@ -1,6 +1,7 @@
 <?php
 include('conn.php');
 
+$output = array();
 $sql = "SELECT
         *
         FROM
@@ -11,34 +12,18 @@ $rows = mysqli_num_rows($query);
 
 if (isset($_POST['search']['value'])) {
     $search_value = $_POST['search']['value'];
-    $sql .= "WHERE
-            username
-            LIKE
-            '%" . $search_value . "%'
-            ";
-    $sql .= "OR
-            email
-            LIKE
-            '%" . $search_value . "%'
-            ";
-    $sql .= "OR
-            mobile
-            LIKE
-            '%" . $search_value . "%'
-            ";
-    $sql .= "OR
-            city
-            LIKE
-            '%" . $search_value . "%'
-            ";
+    $sql .= " WHERE username like '%" . $search_value . "%'";
+    $sql .= " OR email like '%" . $search_value . "%'";
+    $sql .= " OR mobile like '%" . $search_value . "%'";
+    $sql .= " OR city like '%" . $search_value . "%'";
 }
 
 if (isset($_POST['order'])) {
     $column = $_POST['order'][0]['column'];
     $order = $_POST['order'][0]['dir'];
-    $sql .= " ORDER BY '" . $column . "' " . $order;
+    $sql .= " ORDER BY " . $column . " " . $order . "";
 } else {
-    $sql .= "ORDER BY id ASC";
+    $sql .= " ORDER BY id ASC";
 }
 
 if ($_POST['length'] != -1) {
@@ -59,7 +44,7 @@ while ($row = mysqli_fetch_assoc($run_query)) {
     $subarray[] = $row['email'];
     $subarray[] = $row['mobile'];
     $subarray[] = $row['city'];
-    $subarray[] = '<a href="javascript:void();" class="btn btn-sm btn-info">Edit</a> <a href="javascript:void();" class="btn btn-sm btn-danger">Hapus</a>';
+    $subarray[] = '<a href="javascript:void();" data-id="' . $row['id'] . '" class="btn btn-sm btn-info editBtn">Edit</a> <a href="javascript:void();" data-id="' . $row['id'] . '" class="btn btn-sm btn-danger">Hapus</a>';
 
     $data[] = $subarray;
 }
@@ -67,8 +52,8 @@ while ($row = mysqli_fetch_assoc($run_query)) {
 $output = array(
     'data' => $data,
     'draw' => intval($_POST['draw']),
-    'recordsTotal' => $rows,
-    'recordsFiltered' => $filtered_rows
+    'recordsTotal' => $filtered_rows,
+    'recordsFiltered' => $rows
 );
 
 echo json_encode($output);
