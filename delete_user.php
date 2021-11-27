@@ -3,12 +3,7 @@ include "conn.php";
 
 $id = $_POST["id"];
 
-$sql = "DELETE
-        FROM
-        users
-        WHERE
-        id='$id'
-        ";
+$sql = "DELETE FROM users WHERE id='$id'";
 
 $query = mysqli_query($con, $sql);
 

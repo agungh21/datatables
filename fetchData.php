@@ -33,18 +33,17 @@ if ($_POST['length'] != -1) {
 }
 
 $data = array();
-$i = 1;
 
 $run_query = mysqli_query($con, $sql);
 $filtered_rows = mysqli_num_rows($run_query);
 while ($row = mysqli_fetch_assoc($run_query)) {
     $subarray = array();
-    $subarray[] = $i++;
+    $subarray[] = $row['id'];
     $subarray[] = $row['username'];
     $subarray[] = $row['email'];
     $subarray[] = $row['mobile'];
     $subarray[] = $row['city'];
-    $subarray[] = '<a href="javascript:void();" data-id="' . $row['id'] . '" class="btn btn-sm btn-info editBtn">Edit</a> <a href="javascript:void();" data-id="' . $row['id'] . '" class="btn btn-sm btn-danger deleteBtn">Hapus</a>';
+    $subarray[] = '<a href="javascript:void();" data-id="' . $row['id'] . '" class="btn btn-sm btn-info editbtn">Edit</a> <a href="javascript:void();" data-id="' . $row['id'] . '" class="btn btn-sm btn-danger deletebtn">Hapus</a>';
 
     $data[] = $subarray;
 }

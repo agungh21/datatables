@@ -118,7 +118,8 @@
             }
         });
 
-        $(document).on('click', '.editBtn', function(event) {
+        $(document).on('click', '.editbtn', function(event) {
+            event.preventDefault();
             var trid = $(this).closest('tr').attr('id');
             var id = $(this).data('id');
             $.ajax({
@@ -140,10 +141,10 @@
             });
         });
 
-        $(document).on('submit', '#updateUser', function(e) {
-            e.preventDefault();
+        $(document).on('submit', '#updateUser', function(event) {
+            event.preventDefault();
             var id = $('#id').val();
-            // var trid = $('#trid').val();
+            var trid = $('#trid').val();
             var username = $('#_username').val();
             var email = $('#_email').val();
             var mobile = $('#_mobile').val();
@@ -160,14 +161,12 @@
                 type: 'post',
                 success: function(data) {
                     var json = JSON.parse(data);
-                    console.log(json);
                     var status = json.status;
                     if (status == 'success') {
                         var table = $('#datatable').DataTable();
-                        var button = '<td><a href="javascript:void();" data-id="' + id + '" class="btn btn-info btn-sm editbtn">Edit</a>  <a href="#!"  data-id="' + id + '"  class="btn btn-danger btn-sm deleteBtn">Delete</a></td>';
+                        var button = '<a href="javascript:void();" data-id="' + id + '" class="btn btn-sm btn-info editbtn">Edit</a> <a href="javascript:void();" data-id="' + id + '" class="btn btn-sm btn-danger deletebtn">Hapus</a>';
                         var row = table.row("[id='" + trid + "']");
                         row.row("[id='" + trid + "']").data([id, username, email, mobile, city, button]);
-                        console.log(row);
                         $('#editUserModal').modal('hide');
                     } else {
                         alert('failed');
@@ -176,11 +175,10 @@
             });
         });
 
-        $(document).on('click', '.deleteBtn', function(e) {
-            var table = $('#datatable').DataTable();
-            e.preventDefault();
+        $(document).on('click', '.deletebtn', function(event) {
+            event.preventDefault();
             var id = $(this).data('id');
-            if (confirm("Yakin Hapus data ini?")) {
+            if (confirm("yakin hapus data ini?")) {
                 $.ajax({
                     url: "delete_user.php",
                     data: {
@@ -189,12 +187,12 @@
                     type: "post",
                     success: function(data) {
                         var json = JSON.parse(data);
-                        status = json.status;
+                        var status = json.status;
                         if (status == 'success') {
+                            table = $('#datatable').DataTable();
                             $("#" + id).closest('tr').remove();
                         } else {
                             alert('failed');
-                            return;
                         }
                     }
                 });
